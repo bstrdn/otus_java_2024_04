@@ -1,17 +1,15 @@
 package homework;
 
-import java.util.Objects;
-
 public class Customer {
     private final long id;
-    private String name;
+    private final String[] name;
     private long scores;
 
     // todo: 1. в этом классе надо исправить ошибки
 
     public Customer(long id, String name, long scores) {
         this.id = id;
-        this.name = name;
+        this.name = new String[]{name};
         this.scores = scores;
     }
 
@@ -20,11 +18,11 @@ public class Customer {
     }
 
     public String getName() {
-        return name;
+        return name[0];
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name[0] = name;
     }
 
     public long getScores() {
@@ -32,7 +30,7 @@ public class Customer {
     }
 
     public void setScores(long scores) {
-        this.scores = scores;
+//        this.scores = scores;
     }
 
     @Override
@@ -46,17 +44,11 @@ public class Customer {
         if (o == null || getClass() != o.getClass()) return false;
 
         Customer customer = (Customer) o;
-
-        if (id != customer.id) return false;
-        if (scores != customer.scores) return false;
-        return Objects.equals(name, customer.name);
+        return id == customer.id;
     }
 
     @Override
     public int hashCode() {
-        int result = Long.hashCode(id);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + Long.hashCode(scores);
-        return result;
+        return Long.hashCode(id);
     }
 }
