@@ -2,14 +2,14 @@ package homework;
 
 public class Customer {
     private final long id;
-    private final String[] name;
-    private long scores;
+    private String name;
+    private final long scores;
 
     // todo: 1. в этом классе надо исправить ошибки
 
     public Customer(long id, String name, long scores) {
         this.id = id;
-        this.name = new String[]{name};
+        this.name = name;
         this.scores = scores;
     }
 
@@ -18,11 +18,11 @@ public class Customer {
     }
 
     public String getName() {
-        return name[0];
+        return name;
     }
 
     public void setName(String name) {
-        this.name[0] = name;
+        this.name = name;
     }
 
     public long getScores() {
