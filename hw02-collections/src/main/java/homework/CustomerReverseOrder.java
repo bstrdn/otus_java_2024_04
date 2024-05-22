@@ -7,7 +7,7 @@ public class CustomerReverseOrder {
 
     // todo: 2. надо реализовать методы этого класса
     // надо подобрать подходящую структуру данных, тогда решение будет в "две строчки"
-    Deque<Customer> queue = new LinkedList<>();
+    private final Deque<Customer> queue = new LinkedList<>();
 
     public void add(Customer customer) {
         queue.add(customer);
