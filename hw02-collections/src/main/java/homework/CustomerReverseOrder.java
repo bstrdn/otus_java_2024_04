@@ -10,7 +10,7 @@ public class CustomerReverseOrder {
     private final Deque<Customer> queue = new LinkedList<>();
 
     public void add(Customer customer) {
-        queue.add(customer);
+        queue.push(customer);
     }
 
     public Customer take() {
