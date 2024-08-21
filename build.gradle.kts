@@ -4,11 +4,13 @@ import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
 
 plugins {
     idea
+    java
     id("fr.brouillard.oss.gradle.jgitver")
     id("io.spring.dependency-management")
     id("org.springframework.boot") apply false
     id("name.remal.sonarlint") apply false
     id("com.diffplug.spotless") apply false
+    id("io.freefair.lombok") version "8.6"
 }
 
 idea {
@@ -36,6 +38,7 @@ allprojects {
     val jmh: String by project
 
     apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "io.freefair.lombok")
     dependencyManagement {
         dependencies {
             imports {
@@ -87,6 +90,13 @@ subprojects {
             palantirJavaFormat("2.38.0")
         }
     }
+
+    val logback: String by project
+    dependencies {
+        implementation("ch.qos.logback:logback-classic:$logback")
+        implementation("ch.qos.logback:logback-core:$logback")
+    }
+
 
     plugins.apply(fr.brouillard.oss.gradle.plugins.JGitverPlugin::class.java)
     extensions.configure<fr.brouillard.oss.gradle.plugins.JGitverPluginExtension> {
