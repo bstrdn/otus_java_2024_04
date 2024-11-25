@@ -11,16 +11,11 @@ import ru.otus.model.ObjectForMessage;
 
 public class HistoryListener implements Listener, HistoryReader {
 
-  Map<Long, Message> history = new HashMap<>();
+  private final Map<Long, Message> history = new HashMap<>();
 
   @Override
   public void onUpdated(Message msg) {
-    ObjectForMessage historyField13 = new ObjectForMessage();
-    ObjectForMessage field13 = msg.getField13();
-    if (field13 != null && field13.getData() != null) {
-      List<String> field13Data = new ArrayList<>(field13.getData());
-      historyField13.setData(field13Data);
-    }
+    ObjectForMessage objectForMessageCopy = copyObjectForMessage(msg.getField13());
     history.put(msg.getId(),
         new Message.Builder(msg.getId()).field1(msg.getField1()).field2(msg.getField2())
             .field3(msg.getField3())
@@ -29,7 +24,16 @@ public class HistoryListener implements Listener, HistoryReader {
             .field8(msg.getField8()).field9(msg.getField9()).field10(msg.getField10())
             .field11(msg.getField11())
             .field12(msg.getField12())
-            .field13(historyField13).build());
+            .field13(objectForMessageCopy).build());
+  }
+
+  private ObjectForMessage copyObjectForMessage(ObjectForMessage objectForMessage) {
+    ObjectForMessage objectForMessageCopy = new ObjectForMessage();
+    if (objectForMessage != null && objectForMessage.getData() != null) {
+      List<String> field13Data = new ArrayList<>(objectForMessage.getData());
+      objectForMessageCopy.setData(field13Data);
+    }
+    return objectForMessageCopy;
   }
 
   @Override

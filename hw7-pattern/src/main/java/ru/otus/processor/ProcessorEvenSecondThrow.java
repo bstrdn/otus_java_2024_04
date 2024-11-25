@@ -1,22 +1,24 @@
 package ru.otus.processor;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
 import ru.otus.model.Message;
+import ru.otus.processor.homework.DateTimeProvider;
 
+@Getter
 public class ProcessorEvenSecondThrow implements Processor {
+
+  private final DateTimeProvider dateTimeProvider;
+
+  public ProcessorEvenSecondThrow(DateTimeProvider dateTimeProvider) {
+    this.dateTimeProvider = dateTimeProvider;
+  }
+
 
   @Override
   public Message process(Message message) {
-    LocalDateTime now = LocalDateTime.now();
-    if (now.getSecond() % 2 != 0) {
-      int mills = (1_000_000_000 - now.getNano()) / 1_000_000 + 1;
-      try {
-        Thread.sleep(mills);
-        System.out.println("Sleep " + mills);
-      } catch (InterruptedException e) {
-        throw new RuntimeException(e);
-      }
+    if (dateTimeProvider.getDate().getSecond() % 2 == 0) {
+      throw new EvenException("Even Second");
     }
-    throw new EvenException("Even Second");
+    return message;
   }
 }
